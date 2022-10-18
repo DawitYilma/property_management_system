@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree view of Maintenance Type -->
+    <record id="view_maintenance_type_tree" model="ir.ui.view">
+        <field name="name">maintenance.type.tree</field>
+        <field name="model">maintenance.type</field>
+        <field name="arch" type="xml">
+            <tree string="Maintenance Type">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view of Maintenance Type -->
+    <record id="view_maintenance_type_form" model="ir.ui.view">
+        <field name="name">maintenance.type.form</field>
+        <field name="model">maintenance.type</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Type">
+                <sheet>
+
+                    <div class="oe_title">
+                        <label for="name" string="Name" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_follwers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" options="{'thread_level': 1}" />
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

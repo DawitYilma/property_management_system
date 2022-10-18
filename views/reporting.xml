@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tenant_details_graph" model="ir.ui.view">
+         <field name="name">tenant.details.graph</field>
+         <field name="model">tenant.details</field>
+         <field name="arch" type="xml">
+             <graph string="Tenants Analysis" type="line">
+                 <field name="name"/>
+                 <field name="tenant_rent" type="measure"/>
+             </graph>
+         </field>
+    </record>
+    <record id="view_tenant_details_calendar" model="ir.ui.view">
+        <field name="name">tenant.details.calendar</field>
+        <field name="model">tenant.details</field>
+        <field name="arch" type="xml">
+            <calendar string="Tenant Calendar" date_stop="end_date" date_start="start_date" color="name" mode="month" hide_time="true" event_limit="5">
+                <field name="name" />
+                <field name="code"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="view_tenant_details_pivot" model="ir.ui.view">
+        <field name="name">tenant.details.pivot</field>
+        <field name="model">tenant.details</field>
+        <field name="arch" type="xml">
+            <pivot string="Tenant Details">
+                <field name="name" type="row"/>
+                <field name="tenant_rent" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>

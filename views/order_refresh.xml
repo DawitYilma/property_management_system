@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_reload_order" model="ir.actions.server">
+        <field name="name">Refresh</field>
+        <field name="model_id" ref="property_management_system.model_tenant_details"/>
+        <field name="binding_model_id" ref="property_management_system.model_tenant_details"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">
+            for rec in records:
+                rec.order_reload()
+        </field>
+    </record>
+    <record id="action_reload_order_linw" model="ir.actions.server">
+        <field name="name">Refresh</field>
+        <field name="model_id" ref="property_management_system.model_tenant_details_line"/>
+        <field name="binding_model_id" ref="property_management_system.model_tenant_details_line"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">
+            for rec in records:
+                rec.order_line_reload()
+        </field>
+    </record>
+</odoo>

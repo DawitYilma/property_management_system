@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_report_tenant_details"
+            string="Tenant Detail"
+            model="tenant.details"
+            report_type="qweb-pdf"
+            file="property_management_system.report_tenant_details"
+            name="property_management_system.report_tenant_details"
+        />
+    </data>
+    <data>
+        <report
+            id="action_report_tenant_details_line"
+            string="Tenant Detail Line"
+            model="tenant.details.line"
+            report_type="qweb-pdf"
+            file="property_management_system.report_tenant_details_line"
+            name="property_management_system.report_tenant_details_line"
+        />
+    </data>
+</odoo>

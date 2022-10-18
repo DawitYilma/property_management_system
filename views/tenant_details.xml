@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree view of Tenant Details -->
+    <record id="view_tenant_details_tree" model="ir.ui.view">
+        <field name="name">tenant.details.tree</field>
+        <field name="model">tenant.details</field>
+        <field name="arch" type="xml">
+            <tree string="Tenant Details">
+                <field name="code"/>
+                <field name="tenant"/>
+                <field name="name" />
+                <field name="property"/>
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="tenant_rent" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tenant_details_calendar" model="ir.ui.view">
+        <field name="name">tenant.details.calendar</field>
+        <field name="model">tenant.details</field>
+        <field name="arch" type="xml">
+            <calendar string="Tenant Calendar" date_stop="end_date" date_start="start_date" color="name" hide_time="true" event_limit="5">
+                <field name="name" />
+                <field name="code"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Form view of Tenant Details -->
+    <record id="view_tenant_details_form" model="ir.ui.view">
+        <field name="name">tenant.details.form</field>
+        <field name="model">tenant.details</field>
+        <field name="arch" type="xml">
+            <form string="Tenant Details">
+                <header>
+                    <button
+                        name="details_update_available"
+                        string="Available"
+                        states="booked,on_lease"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <button
+                        name="details_update_booked"
+                        string="Booked"
+                        states="available,closed"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <button
+                        name="details_update_onlease"
+                        string="On Lease"
+                        states="available,booked,closed"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <button
+                        name="details_update_closed"
+                        string="Closed"
+                        states="booked,on_lease"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <button
+                        name="compute_rent"
+                        string="Compute Rent"
+                        class="oe_highlight"
+                        type="object"
+                        attrs="{'invisible': [('tenant_property_line', '!=', [])]}"
+                        />
+                    <field name="state" widget="statusbar" statusbar_visible="available,on_lease,booked,closed"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+				        <button class="oe_stat_button" name="invoice_amount_button" type="object" icon="fa-dollar" attrs="{'invisible': [('count_invoice_amount', '=', 0)]}">
+					        <field name="count_invoice_amount" widget="statinfo" string="Invoice Amount"/>
+				        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" string="Name" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <field name="code" />
+                    <group>
+                        <separator string="Property Details" colspan="4" />
+
+                        <group>
+                            <field name="property" />
+                        </group>
+                        <group><field name="tenant" string="Tenant"/></group>
+
+                        <separator string="Tenancy Details" colspan="4" />
+                        <group>
+                            <field name="start_date" />
+                            <field name="rent_type" />
+                            <field name="currency" />
+                            <field name="tenant_rent" widget="monetary" options="{'currency_field': 'currency'}"/>
+                            <field name="deposit" widget="monetary" options="{'currency_field': 'currency'}"/>
+                            <field name="deposit_received" />
+                            <field name="tenant_property_line" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="end_date" string="End Date"/>
+                            <field name="total_rent" widget="monetary" options="{'currency_field': 'currency'}"/>
+                            <field name="utility"/>
+                            <field name="terms" options="{'no_create': True}"/>
+                            <field name="deposit_return" />
+                            <field name="deposit_returned" />
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="rent_details_page" string="Rent Details">
+                            <field
+                                name="tenant_property_line"
+                                colspan="4"
+                                string="Tenant Rent"
+                                nolabel="1"
+                            >
+                                <tree editable="bottom" string="Tenant Rent Line" create="false" decoration-success="date&lt;current_date and date&lt;expected_date and state not in ('paid')" decoration-muted="state in ('paid')" decoration-danger="expected_date&lt;current_date and state not in ('paid')">
+                                    <field name="date" widget="date" string="Date"/>
+                                    <field name="tenant" string="Tenant" readonly="1"/>
+                                    <field
+                                        name="tent_amount"
+                                        string="Rent Amount"
+                                    />
+                                    <field name="utility_price" string="Utility Price" attrs="{'column_invisible': [('parent.utility', '=',  'with_utility')]}"/>
+                                    <field name="note" string="Note"/>
+                                    <field name="tax_id" string="Tax"/>
+                                    <field name="z" invisible="1" />
+                                    <field name="expected_date" invisible="1" />
+                                    <field name="state" string="State" readonly="1"/>
+                                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice" type="action" class="btn-primary" attrs="{'invisible': [('state', '=', 'paid')]}"
+                                            width="0.1"
+                                            options='{"warn": true}'/>
+                                    <button class="btn-success" string="View Invoice" name="invoice_amount_button" type="object" attrs="{'invisible': [('count_invoice_amount', '=', 0)]}">
+					                <field name="count_invoice_amount" widget="statinfo"/>
+				                    </button>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_follwers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" options="{'thread_level': 1}" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

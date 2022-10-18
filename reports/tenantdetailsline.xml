@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_tenant_details_line">
+        <t t-call="web.html_container">
+            <div t-foreach="docs" t-as="o">
+                <div t-call="web.external_layout">
+                    <t t-set="address">
+                        <div t-field="o.tenant_details" />
+                        <div t-field="o.tenant" />
+                    </t>
+                    <br/>
+                    <div class="page">
+                        <h2 class="mt16">
+                            <t t-if="o.line_id" class="col-auto mw-100 mb-2">
+                                <span>Tenant # </span>
+                            </t>
+                            <span t-field="o.line_id"/>
+                        </h2>
+                        <t t-if="o.line_id">
+                            <table class="table table-sm o_main_table" name="property">
+                                <thead>
+                                    <tr>
+                                        <th name="th_date" class="text-left">
+                                            <span>Date</span>
+                                        </th>
+                                        <th name="th_state" class="text-left">
+                                            <span>State</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Price</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <t t-if="o.line_id">
+                                    <tr>
+                                        <td>
+                                            <span t-field="o.date"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.state"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.tent_amount"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </table>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

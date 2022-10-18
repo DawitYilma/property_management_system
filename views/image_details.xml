@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree view of Image Details -->
+    <record id="view_image_details_kanban" model="ir.ui.view">
+        <field name="name">image.details.kanban</field>
+        <field name="model">image.details</field>
+        <field name="arch" type="xml">
+            <kanban class="image_detailskanban">
+                <field name="id" />
+                <field name="photo" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <t t-if="record.photo.raw_value">
+                                <!--<div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{kanban_image('image.details', 'image_128', record.id.raw_value)}')"/>-->
+                                <img alt="" t-if="record.photo.raw_value" t-att-src="kanban_image('image.details', 'photo', record.id.raw_value)"/>
+                            </t>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form view of Image Details -->
+    <record id="view_image_details_form" model="ir.ui.view">
+        <field name="name">image.details.form</field>
+        <field name="model">image.details</field>
+        <field name="arch" type="xml">
+            <form string="Image Detials">
+                <sheet>
+                    <group>
+                        <field name="photo" widget="image"/>
+                    </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Tree view of Property Maintenance -->
+    <record id="view_property_maintenance_tree" model="ir.ui.view">
+        <field name="name">property.maintenance.tree</field>
+        <field name="model">property.maintenance</field>
+        <field name="arch" type="xml">
+            <tree string="property.maintenance" decoration-muted="state in ('done')" decoration-danger="main_date&lt;current_date and state not in ('done')">
+                <field name="code"/>
+                <field name="name" />
+                <field name="property"/>
+                <field name="maintenance_value"/>
+                <field name="main_date" invisible="1"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_property_maintenance_search" model="ir.ui.view">
+            <field name="name">property.maintenance.search</field>
+            <field name="model">property.maintenance</field>
+            <field name="arch" type="xml">
+                <search string="Search Property Maintenance">
+                    <field name="name" string="Name"/>
+                    <separator/>
+                    <filter string="New" name="new" domain="[('state', '=', 'new')]"/>
+                    <filter string="In Process" name="in_process" domain="[('state', '=', 'in_process')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string='State' name="group_by_state" domain="[]" context="{'group_by' : 'state'}"/>
+                   </group>
+                </search>
+            </field>
+        </record>
+
+    <!-- Form view of Property Maintenance -->
+    <record id="view_property_maintenance_form" model="ir.ui.view">
+        <field name="name">property.maintenance.form</field>
+        <field name="model">property.maintenance</field>
+        <field name="arch" type="xml">
+            <form string="Property Maintenance">
+                <header>
+                    <button
+                        name="details_update_inprocess"
+                        string="In Process"
+                        states="new"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <button
+                        name="details_update_done"
+                        string="Done"
+                        states="in_process,new"
+                        class="oe_highlight"
+                        type="object"
+                        />
+                    <field name="state" widget="statusbar" statusbar_visible="available,sold"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <field name="code"/>
+                    <group>
+                        <group>
+                            <field name="customer_group" invisible="1"/>
+                            <field name="pre_date" />
+                            <field name="floors" />
+                            <field name="main_date"/>
+                            <field name="maintenance_type" options="{'no_create': True}"/>
+                            <field name="customer_property" />
+                        </group>
+                        <group>
+                            <field name="property" />
+                            <field name="child_ids" String="Customer"/>
+                            <field name="property_manager"/>
+                            <field name="created_by" />
+                            <field name="maintenance_value" />
+                        </group>
+                    </group>
+                    <notebook>
+
+                        <page name="general_information" string="Product In Need Of Maintenance">
+                            <group>
+                                <field name="product_in_maintenance"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_follwers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" options="{'thread_level': 1}" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="open_tenant_details_view_graph_calendar" model="ir.actions.act_window">
+        <field name="name">Tenant Details</field>
+        <field name="res_model">tenant.details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">calendar,graph,pivot</field>
+        <field name="context">{}</field>
+    </record>
+    <record id="open_property_maintenance_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Property Maintenance</field>
+        <field name="res_model">property.maintenance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_new':1,'search_default_in_process':1}</field>
+    </record>
+    <record id="open_tenant_details_line_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Tenant Details Line</field>
+        <field name="res_model">tenant.details.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="limit">1000</field>
+        <field name="context">{'search_default_date_passed':1}</field>
+    </record>
+    <record id="open_image_details_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Image Details</field>
+        <field name="res_model">image.details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Property created...!
+            </p>
+        </field>
+    </record>
+    <record id="open_property_details_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Property Details</field>
+        <field name="res_model">property.details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_group_by_state':1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Property created...!
+            </p>
+        </field>
+    </record>
+    <record id="open_tenant_details_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Tenant Details</field>
+        <field name="res_model">tenant.details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Tenant details created...!
+            </p>
+        </field>
+    </record>
+    <record id="open_property_type_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Property Type</field>
+        <field name="res_model">property.type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Property Type created...!
+            </p>
+        </field>
+    </record>
+    <record id="open_terms_conditions_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Terms And Conditions</field>
+        <field name="res_model">terms.conditions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Terms and Conditions created...!
+            </p>
+        </field>
+    </record>
+    <record id="open_maintenance_type_view_form_tree" model="ir.actions.act_window">
+        <field name="name">Maintenance Type</field>
+        <field name="res_model">maintenance.type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is not any Maintenance Type created...!
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="property_management_menu"
+            name="Property Management"
+            sequence="3"
+            web_icon="property_management_system,static/description/icon.png" />
+
+    <menuitem
+        id="property_details_menu"
+        name="Property Details"
+        action="open_property_details_view_form_tree"
+        sequence="1"
+        parent="property_management_menu"
+        groups="property_management_system.group_super_user,property_management_system.group_view_user"
+    />
+
+    <menuitem
+        id="property_maintenance_menu"
+        name="Property Maintenance"
+        action="open_property_maintenance_view_form_tree"
+        sequence="4"
+        parent="property_management_menu"
+    />
+    <menuitem
+        id="property_report_menu"
+        name="Reporting"
+        sequence="6"
+        parent="property_management_menu"
+        groups="property_management_system.group_super_user"
+    />
+    <menuitem
+        id="tenant_details_graph_calendar"
+        name="Tenant Details"
+        action="open_tenant_details_view_graph_calendar"
+        sequence="2"
+        parent="property_report_menu"
+    />
+    <menuitem
+        id="tenant_details_line"
+        name="Tenant Invoice"
+        action="open_tenant_details_line_view_form_tree"
+        sequence="3"
+        parent="property_management_menu"
+    />
+
+    <menuitem
+        id="tenant_details_menu"
+        name="Tenant Details"
+        action="open_tenant_details_view_form_tree"
+        sequence="2"
+        parent="property_management_menu"
+    />
+    <menuitem
+        id="configuration_menu"
+        name="Configuration"
+        sequence="210"
+        parent="property_management_menu"
+        groups="property_management_system.group_super_user"
+    />
+    <menuitem
+        id="maintenance_type_menu"
+        name="Maintenance Type"
+        action="open_maintenance_type_view_form_tree"
+        sequence="3"
+        parent="configuration_menu"
+    />
+    <menuitem
+        id="terms_conditions_menu"
+        name="Terms And Conditions"
+        action="open_terms_conditions_view_form_tree"
+        sequence="5"
+        parent="configuration_menu"
+    />
+    <menuitem
+        id="property_type_menu"
+        name="Property Type"
+        action="open_property_type_view_form_tree"
+        sequence="2"
+        parent="configuration_menu"
+    />
+
+
+</odoo>

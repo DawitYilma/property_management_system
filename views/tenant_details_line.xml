@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_tenant_details_line_tree" model="ir.ui.view">
+        <field name="model">tenant.details.line.tree</field>
+        <field name="model">tenant.details.line</field>
+        <field name="arch" type="xml">
+            <tree string="Tenant Rent Line" create="false" decoration-success="date&lt;=current_date and date&lt;expected_date and state not in ('paid')" decoration-muted="state in ('paid')" decoration-danger="expected_date&lt;current_date and state not in ('paid')">
+                <field name="tenant_details" string="Details"/>
+                <field name="tenant" string="Tenant"/>
+                <field name="date" widget="date" string="Date"/>
+                <field name="tent_amount" string="Rent Amount" />
+                <field name="z" invisible="1" />
+                <field name="safe" invisible="1" />
+                <field name="expected_date" invisible="1" />
+                <field name="state" string="State"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tenant_details_line_search" model="ir.ui.view">
+        <field name="name">tenant.details.line.search</field>
+        <field name="model">tenant.details.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Property Details">
+                <!--<field name="code" string="Bill of Materials" filter_domain="['|', ('code', 'ilike', self), ('product_tmpl_id', 'ilike', self)]"/>-->
+                <field name="name" string="Name"/>
+                <separator/>
+                <filter string="Unpaid" name="unpaid" domain="[('state', '=', 'unpaid')]"/>
+                <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]"/>
+                <filter string="Safe" name="safe" domain="[('safe', '=', 'date_safe')]"/>
+                <filter string="Date Passed" name="date_passed" domain="[('safe', '=', 'date_passed')]"/>
+                <group expand="0" string="Group By...">
+                    <filter string='State' name="group_by_state" domain="[]" context="{'group_by' : 'state'}"/>
+               </group>
+            </search>
+        </field>
+    </record>
+    <!-- Form view of Tenant Details Line -->
+    <record id="view_tenant_details_line_form" model="ir.ui.view">
+        <field name="name">tenant.details.line.form</field>
+        <field name="model">tenant.details.line</field>
+        <field name="arch" type="xml">
+            <form string="Tenant Detials Line" create="false">
+                <header>
+                    <button
+                        name="%(sale.action_view_sale_advance_payment_inv)d"
+                        string="Create Invoice"
+                        type="action"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '=', 'paid')]}"
+                        />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="invoice_amount_button" type="object" icon="fa-dollar" attrs="{'invisible': [('count_invoice_amount', '=', 0)]}">
+                            <field name="count_invoice_amount" widget="statinfo" string="Invoice Amount"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="line_id" String="Invoice Id"/>
+                            <field name="tenant_details" string="Details"/>
+                            <field name="tenant" string="Tenant" />
+                            <field name="terms" string="Terms" />
+                            <field name="safe" invisible="1" options='{"always_reload": True}'/>
+                            <field name="utility_price" string="Utility Price" />
+                        </group>
+                        <group>
+                            <field name="tent_amount" string="Rent Amount" options='{"always_reload": True}'/>
+                            <field name="state" string="State"/>
+                            <field name="y" string="YY" invisible="1"/>
+                            <field name="date" widget="date" string="Date"/>
+                            <field name="tax_id" string="Tax"/>
+                        </group>
+                    </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
